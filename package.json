@@ -7,7 +7,7 @@
     "start": "nodemon src/index.ts",
     "start:dev": "cross-env nodemon --watch 'src/**/*' -e 'ts' --exec 'ts-node' src/index.ts",
     "start:prod": "node src/index.ts",
-    "start:multi": "cross-env nodemon --watch 'src/**/*' -e 'ts' --exec 'ts-node' src/cluster.ts",
+    "start:multi": "cross-env nodemon --watch 'src/**/*' -e 'ts' --exec 'ts-node' src/clusterParent.ts",
     "test": "jest --detectOpenHandles --config ./test/jest-server.json",
     "test:verbose": "jest --verbose",
     "test:detect": "jest -- --detectOpenHandles",

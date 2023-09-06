@@ -1,12 +1,11 @@
 import http from 'node:http';
 import { UserDB } from '../models/db';
-import { REG_ENDPOINT_BASE, REG_UUID, anythingAfterUsers } from '../regex/regex';
+import { REG_UUID } from '../regex/regex';
 import crypto from 'node:crypto';
 
 const router = (req: http.IncomingMessage, res: http.ServerResponse) => {
     const { method, url } = req;
     const splitUrl: string | undefined = url?.split('/')[3];
-    // const fullUrl = `http://localhost:8000${url}`;
     
     if (method === 'GET') {
         if (url === '/api/users') {
