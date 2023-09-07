@@ -1,19 +1,18 @@
 import http from 'node:http';
-import { UserDB } from '../models/db';
 import { REG_UUID } from '../regex/regex';
-import crypto from 'node:crypto';
+import { UserData } from '../userTypes/userType';
 
-const router = (req: http.IncomingMessage, res: http.ServerResponse) => {
+const router = (req: http.IncomingMessage, res: http.ServerResponse, UserDB: UserData) => {
     const { method, url } = req;
     const splitUrl: string | undefined = url?.split('/')[3];
     
     if (method === 'GET') {
         if (url === '/api/users') {
             res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.write(JSON.stringify({ message: UserDB }));
+            res.write(JSON.stringify({ message: UserDB.getUsers() }));
             res.end();
         } else if (REG_UUID.test(splitUrl || '') && splitUrl) {
-            const user = UserDB.find((user) => user.id === splitUrl);
+            const user = UserDB.getUser(splitUrl);
             if (user) {
                 res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.write(JSON.stringify({ message: user }));
@@ -42,13 +41,8 @@ const router = (req: http.IncomingMessage, res: http.ServerResponse) => {
                     res.end();
                     return;
                 }
-                const newUser = {
-                    id: crypto.randomUUID(),
-                    username,
-                    age,
-                    hobbies
-                };
-                UserDB.push(newUser);
+                const user = { id: '', username, age, hobbies };
+                const newUser = UserDB.addUser(user);
                 res.writeHead(201, { 'Content-Type': 'application/json' });
                 res.write(JSON.stringify({ message: newUser }));
                 res.end();
@@ -56,7 +50,7 @@ const router = (req: http.IncomingMessage, res: http.ServerResponse) => {
         }
     } else if (method === 'PUT') {
         if (REG_UUID.test(splitUrl || '') && splitUrl) {
-            const user = UserDB.find((user) => user.id === splitUrl);
+            const user = UserDB.getUser(splitUrl);
             if (user) {
                 let body = '';
                 req.on('data', (chunk) => {
@@ -70,11 +64,15 @@ const router = (req: http.IncomingMessage, res: http.ServerResponse) => {
                         res.end();
                         return;
                     }
-                    user.username = username;
-                    user.age = age; 
-                    user.hobbies = hobbies;
+                    const updatedUser = UserDB.updateUser(splitUrl, 
+                        { 
+                            id: splitUrl, 
+                            username, 
+                            age, 
+                            hobbies 
+                        });
                     res.writeHead(200, { 'Content-Type': 'application/json' });
-                    res.write(JSON.stringify({ message: user }));
+                    res.write(JSON.stringify({ message: updatedUser }));
                     res.end();
                 });
             } else {
@@ -89,10 +87,8 @@ const router = (req: http.IncomingMessage, res: http.ServerResponse) => {
         }
     } else if (method === 'DELETE') {
         if (REG_UUID.test(splitUrl || '') && splitUrl) {
-            const user = UserDB.find((user) => user.id === splitUrl);
+            const user = UserDB.deleteUser(splitUrl);
             if (user) {
-                const index = UserDB.indexOf(user);
-                UserDB.splice(index, 1);
                 res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.write(JSON.stringify({ message: 'User deleted' }));
                 res.end();
