@@ -2,7 +2,7 @@ import { User, UserData } from "../userTypes/userType";
 
 import crypto from 'node:crypto';
 
-export class InMemoryDB implements UserData {
+export default class InMemoryDB implements UserData {
     private db: User[] = [];
 
     constructor() {

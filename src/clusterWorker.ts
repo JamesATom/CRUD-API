@@ -1,16 +1,13 @@
-import cluster from 'node:cluster';
+import cluster, { Worker } from 'node:cluster';
 import http from 'node:http';
 import router from "./routes/userRoutes";
-// import { UserData } from './userTypes/userType';
 
-import { InMemoryDB } from "./models/db";
-
-const startWorkers = (): void => {
+const startWorkers = (sharedMemory: any): void => {
     // Worker processes
     const port = 8000 + Number(cluster.worker?.id);
 
     const server = http.createServer((req, res) => {
-        router(req, res, new InMemoryDB());
+        router(req, res, sharedMemory);
     });
     
     server.listen(port, () => {

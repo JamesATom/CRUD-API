@@ -1,8 +1,7 @@
 import http from 'node:http';
 import { REG_UUID } from '../regex/regex';
-import { UserData } from '../userTypes/userType';
 
-const router = (req: http.IncomingMessage, res: http.ServerResponse, UserDB: UserData) => {
+const router = (req: http.IncomingMessage, res: http.ServerResponse, UserDB: any) => {
     const { method, url } = req;
     const splitUrl: string | undefined = url?.split('/')[3];
     
