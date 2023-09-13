@@ -45,6 +45,7 @@ const router = (req: http.IncomingMessage, res: http.ServerResponse, UserDB: any
                 res.writeHead(201, { 'Content-Type': 'application/json' });
                 res.write(JSON.stringify({ message: newUser }));
                 res.end();
+                process.send?.({ type: 'db', action: 'POST', data: newUser });
             });
         }
     } else if (method === 'PUT') {
@@ -73,6 +74,7 @@ const router = (req: http.IncomingMessage, res: http.ServerResponse, UserDB: any
                     res.writeHead(200, { 'Content-Type': 'application/json' });
                     res.write(JSON.stringify({ message: updatedUser }));
                     res.end();
+                    process.send?.({ type: 'db', action: 'PUT', data: updatedUser });
                 });
             } else {
                 res.writeHead(404, { 'Content-Type': 'application/json' });
@@ -91,6 +93,7 @@ const router = (req: http.IncomingMessage, res: http.ServerResponse, UserDB: any
                 res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.write(JSON.stringify({ message: 'User deleted' }));
                 res.end();
+                process.send?.({ type: 'db', action: 'DELETE', data: user });
             } else {
                 res.writeHead(404, { 'Content-Type': 'application/json' });
                 res.write(JSON.stringify({ message: 'User not found' }));

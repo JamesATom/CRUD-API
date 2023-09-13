@@ -1,5 +1,4 @@
 import { User, UserData } from "../userTypes/userType";
-
 import crypto from 'node:crypto';
 
 export default class InMemoryDB implements UserData {
@@ -10,6 +9,16 @@ export default class InMemoryDB implements UserData {
     }
 
     public addUser(user: any): User {
+        if (user.id) {
+            const newUser: User = {
+                id: user.id,
+                username: user.username,
+                age: user.age,
+                hobbies: user.hobbies
+            };
+            this.db.push(newUser);
+            return newUser;
+        }
         const newUser: User = {
             id: crypto.randomUUID(),
             username: user.username,

@@ -1,6 +1,7 @@
 import http from 'node:http';
 import router from '../routes/userRoutes';
-import { InMemoryDB } from '../models/db';
+
+import InMemoryDB from '../models/db';
 
 const instanceDB = new InMemoryDB();    
 
