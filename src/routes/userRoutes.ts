@@ -90,7 +90,7 @@ const router = (req: http.IncomingMessage, res: http.ServerResponse, UserDB: any
         if (REG_UUID.test(splitUrl || '') && splitUrl) {
             const user = UserDB.deleteUser(splitUrl);
             if (user) {
-                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.writeHead(204, { 'Content-Type': 'application/json' });
                 res.write(JSON.stringify({ message: 'User deleted' }));
                 res.end();
                 process.send?.({ type: 'db', action: 'DELETE', data: user });
