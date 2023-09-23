@@ -10,6 +10,7 @@ INSTRUCTIONS TO USE APP
 `npm run start:prod`  - application is run in production mode<br>
 `npm run start:multi` - application is run with Load Balancer<br>
 <hr>
+
 ### Test with Jest Framework
 `npm run test` - Just Run Test to make sure Integration test is successful
 
