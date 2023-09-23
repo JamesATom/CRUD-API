@@ -6,10 +6,42 @@ INSTRUCTIONS TO USE APP
 1. git clone git@github.com:JamesATom/CRUD-API.git
 2. Navigate to the folder and npm install or i
 ***
-### Run Options
-`npm run start:dev`   - application is run in development mode<br>
-`npm run start:prod`  - application is run in production mode<br>
-`npm run start:multi` - application is run with Load Balancer<br>
+
+## Run Options
+
+This application can be run in different modes depending on your needs.
+
+### npm run start:dev
+
+This command will start the application in development mode. In this mode, the app will be running with debugging and hot reloading enabled. This means that you can modify the code and see the changes immediately without having to restart the app. This mode is useful during development and testing.
+
+To run the application in development mode, open a terminal and navigate to the project directory, then run:
+
+```
+npm run start:dev
+```
+
+### npm run start:prod
+
+This command will start the application in production mode. In this mode, the app will be optimized for performance and will be running in a production-like environment. This mode is useful when you're ready to deploy the application to a production server.
+
+To run the application in production mode, open a terminal and navigate to the project directory, then run:
+
+```
+npm run start:prod
+```
+
+### npm run start:multi
+
+This command will start the application with a load balancer. In this mode, the app will be running multiple instances in parallel, with each instance running on a different port. This is useful when you need to handle a large number of requests and want to distribute the load across multiple servers.
+
+To run the application with a load balancer, open a terminal and navigate to the project directory, then run:
+
+```
+npm run start:multi
+```
+
+This will start the load balancer and launch multiple instances of the application, each on a different port. The load balancer will then distribute the requests across the instances based on their availability and load.
 <hr>
 
 ### Test with Jest Framework
